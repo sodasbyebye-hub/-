@@ -174,9 +174,7 @@ const setSeed = (seed: number) => {
   core?.setSeed(seed);
 };
 
-defineExpose({ addGarbage, reset: init, setSeed });
-
-useControls({
+const { startDAS, stopDAS } = useControls({
   keyMap: props.keyMap,
   enableTouch: props.enableTouch,
   onMoveLeft: () => { core?.move(-1); emitState(); audioController.play('move'); },
@@ -184,6 +182,19 @@ useControls({
   onMoveDown: () => { core?.tick(); emitState(); audioController.play('move'); },
   onRotate: () => { core?.rotate(); emitState(); },
   onHardDrop: () => { core?.hardDrop(); emitState(); },
+});
+
+defineExpose({ 
+  addGarbage, 
+  reset: init, 
+  setSeed,
+  startDAS,
+  stopDAS,
+  moveLeft: () => { core?.move(-1); emitState(); audioController.play('move'); },
+  moveRight: () => { core?.move(1); emitState(); audioController.play('move'); },
+  moveDown: () => { core?.tick(); emitState(); audioController.play('move'); },
+  rotate: () => { core?.rotate(); emitState(); },
+  hardDrop: () => { core?.hardDrop(); emitState(); },
 });
 
 onMounted(init);

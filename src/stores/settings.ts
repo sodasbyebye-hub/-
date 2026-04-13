@@ -4,6 +4,8 @@ import { ref } from 'vue';
 export const useSettingsStore = defineStore('settings', () => {
   const isMuted = ref(false);
   const masterVolume = ref(1.0);
+  const showVirtualButtons = ref(true);
+  const enableExpertGestures = ref(false);
 
   const toggleMute = () => {
     isMuted.value = !isMuted.value;
@@ -16,6 +18,8 @@ export const useSettingsStore = defineStore('settings', () => {
   return {
     isMuted,
     masterVolume,
+    showVirtualButtons,
+    enableExpertGestures,
     toggleMute,
     setVolume
   };

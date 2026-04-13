@@ -6,6 +6,7 @@ import { useOnline } from './hooks/useOnline'
 import { audioController } from './engine/AudioController'
 import { useSettingsStore } from './stores/settings'
 import GameCanvas from './components/GameCanvas.vue'
+import ControlPanel from './components/ControlPanel.vue'
 import gsap from 'gsap'
 
 const currentMode = ref<GameMode>(GameMode.SINGLE)
@@ -132,6 +133,13 @@ const scaleDown = (el: any) => gsap.to(el, { scale: 1, duration: 0.2 });
                 class="w-12 h-12 bg-white/80 backdrop-blur-md rounded-2xl shadow-xl flex items-center justify-center text-xl hover:bg-white transition-all">
           {{ settings.isMuted ? '🔇' : '🔊' }}
         </button>
+        <!-- 专家手势模式开关 -->
+        <button @click="settings.enableExpertGestures = !settings.enableExpertGestures" 
+                :class="settings.enableExpertGestures ? 'bg-[#FFDAC1] text-white' : 'bg-white/80 text-[#8B7E74]'"
+                class="mt-2 w-12 h-12 backdrop-blur-md rounded-2xl shadow-xl flex flex-col items-center justify-center text-[10px] font-black hover:opacity-80 transition-all">
+          <span class="text-base">👆</span>
+          {{ settings.enableExpertGestures ? 'ON' : 'OFF' }}
+        </button>
     </div>
 
     <!-- 装饰背景 -->
@@ -215,13 +223,18 @@ const scaleDown = (el: any) => gsap.to(el, { scale: 1, duration: 0.2 });
                       @garbage-sent="handleGarbageSent"
                       @game-over="handleGameOver" />
 
-          <!-- 对手镜像 (联网对战) -->
           <GameCanvas v-if="currentMode === GameMode.ONLINE_PVP"
                       player-name="REMOTE PLAYER"
                       :key-map="P2_KEYS"
                       :readonly="true"
                       :external-state="remoteState" />
       </div>
+
+      <!-- 虚拟手柄 -->
+      <ControlPanel v-if="settings.showVirtualButtons"
+                    :mode="currentMode"
+                    :p1="p1Game"
+                    :p2="p2Game" />
     </div>
 
     <!-- 结算 -->
