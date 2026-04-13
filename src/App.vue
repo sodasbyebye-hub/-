@@ -29,21 +29,21 @@ const {
 
 // 模式切换
 const startSingle = () => {
-  audioController.play('start')
+  audioController.play('click')
   audioController.startBGM()
   currentMode.value = GameMode.SINGLE
   isMenuVisible.value = false
 }
 
 const startBattle = () => {
-  audioController.play('start')
+  audioController.play('click')
   audioController.startBGM()
   currentMode.value = GameMode.LOCAL_2P
   isMenuVisible.value = false
 }
 
 const startOnline = () => {
-  audioController.play('start')
+  audioController.play('click')
   audioController.startBGM()
   currentMode.value = GameMode.ONLINE_PVP
   isMenuVisible.value = false
